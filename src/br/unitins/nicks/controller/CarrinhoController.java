@@ -1,0 +1,99 @@
+package br.unitins.nicks.controller;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
+
+import br.unitins.nicks.application.Session;
+import br.unitins.nicks.application.Util;
+import br.unitins.nicks.dao.VendaDao;
+import br.unitins.nicks.model.ItemVenda;
+import br.unitins.nicks.model.Usuario;
+import br.unitins.nicks.model.Venda;
+
+@Named
+@RequestScoped
+
+public class CarrinhoController implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1485837909393811286L;
+	private Venda venda;
+
+	public void finalizar() {
+		Usuario usuario = (Usuario) Session.getInstance().get("usuarioLogado");
+		if (usuario == null) {
+			Util.addErrorMessage("Impossível realizar a venda, faça o login no sistema.");
+			return;
+		}
+
+		if (getVenda().getListaItemVenda() == null || getVenda().getListaItemVenda().isEmpty()) {
+			Util.addErrorMessage("Não existem produtos no carrinho.");
+			return;
+		}
+
+		
+		getVenda().setUsuario(usuario);
+
+	
+		VendaDao dao = new VendaDao();
+		if (dao.inserir(getVenda())) {
+			dao.insereVal(getVenda());
+			Util.addInfoMessage("Venda realizada com sucesso.");
+		
+			Session.getInstance().set("carrinho", null);
+		
+			setVenda(null);
+		} else {
+			Util.addErrorMessage("Problemas ao concluir a venda. Tente novamente mais tarde.");
+		}
+
+	}
+
+	public static float pegaTot(List<ItemVenda> lista) {
+
+		float tot = 0;
+
+		for (int i = 0; i < lista.size(); i++) {
+
+			tot += lista.get(i).getValorUnitario() * lista.get(i).getQuantidade();
+
+		}
+
+		return tot;
+	}
+
+	public void remover(ItemVenda iv) {
+
+		int index = getVenda().getListaItemVenda().indexOf(iv);
+		getVenda().getListaItemVenda().remove(index);
+
+		Util.addErrorMessage("Produto removido com sucesso!");
+
+	}
+
+	public Venda getVenda() {
+		if (venda == null)
+			venda = new Venda();
+
+		@SuppressWarnings("unchecked")
+		List<ItemVenda> carrinho = (List<ItemVenda>) Session.getInstance().get("carrinho");
+
+		if (carrinho == null)
+			venda.setListaItemVenda(new ArrayList<ItemVenda>());
+		else
+			venda.setListaItemVenda(carrinho);
+
+		return venda;
+	}
+
+	public void setVenda(Venda venda) {
+		this.venda = venda;
+	}
+
+}

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template.xhtml">
+	<ui:define name="conteudo">
+		<h:form>
+			<p:growl id="growl" showDetail="false" />
+			<p:panel>
+				<f:facet name="header">
+					<h2>Meu Perfil</h2>
+				</f:facet>
+
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Nome *" />
+					<h:panelGroup>
+						<p:inputText
+							value="#{meuPerfilController.entity.pessoaFisica.nome}"
+							validatorMessage="O nome tem que possuir mais de 2 caracteres."
+							required="true" requiredMessage="O nome deve ser preenchido.">
+							<f:validateLength minimum="2" />
+						</p:inputText>
+
+					</h:panelGroup>
+
+					<p:outputLabel for="key" value="Cpf" />
+					<p:inputMask value="#{meuPerfilController.entity.pessoaFisica.cpf}"
+						id="key" mask="999.999.999-99" validateMask="true" required="true"
+						requiredMessage="O cpf deve ser preenchido.">
+					</p:inputMask>
+
+					<p:outputLabel value="Login *" />
+					<p:inputText value="#{meuPerfilController.entity.login}"
+						validatorMessage="O login tem que possuir mais de 6 caracteres."
+						required="true" requiredMessage="O login deve ser preenchido.">
+						<f:validateLength minimum="6" />
+					</p:inputText>
+
+					<p:outputLabel value="Senha *" />
+					<p:password id="inlineFeedback"
+						value="#{meuPerfilController.entity.senha }" feedback="true"
+						inline="true" required="true"
+						requiredMessage="A senha deve ser preenchida.">
+					</p:password>
+
+					<p:outputLabel value="Confimar Senha *" />
+					<p:inputText value="#{meuPerfilController.confirmarSenha}"
+						type="password" required="true"
+						requiredMessage="O confirmar senha deve ser preenchido.">
+					</p:inputText>
+
+					<p:outputLabel value="Endereço" />
+					<p:autoComplete placeholder="digite seu cep"
+						value="#{meuPerfilController.entity.endereco}" var="obj"
+						itemLabel="#{obj.cep}" itemValue="#{obj}"
+						completeMethod="#{meuPerfilController.completeEndereco}"
+						dropdown="true" forceSelection="true" />
+
+					<p:outputLabel value="" />
+
+					<p:commandLink class="text-right" value="Cadastrar novo endereço?"
+						action="/pages/endereco.com?faces-redirect=true" />
+				</h:panelGrid>
+
+				<f:facet name="footer">
+					<h:panelGrid columns="4">
+						<p:commandButton value="Salvar"
+							styleClass="ui-button-raised ui-button-secondary"
+							actionListener="#{meuPerfilController.salvar}" process="@form"
+							update="@form" />
+
+						<p:commandButton value="Limpar"
+							styleClass="ui-button-raised ui-button-secondary"
+							actionListener="#{meuPerfilController.limpar}" process="@this"
+							update="@form" />
+
+						<p:commandButton value="Voltar"
+							styleClass="ui-button-raised ui-button-secondary"
+							onclick="history.go(-1); return false;" />
+					</h:panelGrid>
+				</f:facet>
+			</p:panel>
+
+		</h:form>
+
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+			responsive="true" width="350">
+			<p:commandButton value="Não" type="button"
+				styleClass="ui-confirmdialog-no ui-button-flat" />
+			<p:commandButton value="Sim" type="button"
+				styleClass="ui-confirmdialog-yes" />
+		</p:confirmDialog>
+
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage name="/image/loader.gif" height="300" width="400" />
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
+</html>

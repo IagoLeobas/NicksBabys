@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template.xhtml">
+	<ui:define name="conteudo">
+
+		<h:form>
+			<p:growl id="growl" globalOnly="false" />
+			<p:panel id="panel">
+				<f:facet name="header">
+					<div align="center">
+						<h1>Relatório de Produtos</h1>
+					</div>
+				</f:facet>
+				<div class="ui-g ui-fluid">
+					<div class="ui-g-12">
+						<div class="card card-w-title">
+							<p:panelGrid columns="1"
+								styleClass="form-group ui-panelgrid-blank" layout="grid">
+
+								<p:outputLabel id="labelCategoria" value="Filtro por Categoria:" />
+								<p:selectOneMenu value="#{relatorioProdutoController.categoria}">
+									<f:selectItem itemLabel="Todos" />
+									<f:selectItems
+										value="#{relatorioProdutoController.listaCategoria}" var="obj"
+										itemLabel="#{obj.label}" />
+								</p:selectOneMenu>
+
+
+							</p:panelGrid>
+
+
+						</div>
+					</div>
+				</div>
+				<p:toolbar>
+					<f:facet name="left">
+						<p:commandButton value="Buscar Produtos" icon="pi pi-check"
+							process="@form" styleClass="ui-button-raised ui-button-secondary"
+							update="@form"
+							actionListener="#{relatorioProdutoController.pesquisar}" />
+
+						<p:commandButton value="Limpar"
+							styleClass="ui-button-raised ui-button-secondary" process="@this"
+							update="@form"
+							actionListener="#{relatorioProdutoController.limpar()}">
+							<p:ajax update="@form" resetValues="true" />
+						</p:commandButton>
+
+					</f:facet>
+					<f:facet name="right">
+						<p:commandButton value="Gerar Relatório" ajax="false"
+							styleClass="ui-button-raised ui-button-secondary"
+							disabled="#{relatorioProdutoController.listaProduto.isEmpty()}"
+							actionListener="#{relatorioProdutoController.gerarRelatorio}"
+							onclick="this.form.target='_blank'">
+						</p:commandButton>
+
+					</f:facet>
+				</p:toolbar>
+			</p:panel>
+
+			<p:dataTable id="dtListagem" var="entity"
+				value="#{relatorioProdutoController.listaProduto}">
+				<p:column headerText="Decrição">
+					<h:commandLink value="#{entity.descricao}" />
+				</p:column>
+
+				<p:column headerText="Marca">
+					<h:commandLink value="#{entity.marca}" />
+				</p:column>
+
+				<p:column headerText="Idade">
+					<h:commandLink value="#{entity.idade}" />
+				</p:column>
+
+				<p:column headerText="Cor">
+					<h:commandLink value="#{entity.cor}" />
+				</p:column>
+
+				<p:column headerText="Preco">
+					<h:commandLink value="#{entity.preco}" />
+				</p:column>
+
+				<p:column headerText="Estoque">
+					<h:commandLink value="#{entity.qtdEstoque}" />
+				</p:column>
+
+			</p:dataTable>
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

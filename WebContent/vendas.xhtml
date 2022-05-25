@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template.xhtml">
+	<ui:define name="conteudo">
+		<h:form>
+			<p:growl id="growl" showDetail="false" />
+			<p:panel>
+				<f:facet name="header">
+					<div>
+						<div align="center" style="width: 85%; display: inline-block;">
+							<h1>Vendas</h1>
+						</div>
+					</div>
+				</f:facet>
+
+				<h:panelGrid columns="5">
+
+					<p:inputText id="itFiltro" style="width:430px"
+						value="#{vendaController.filtro}"
+						placeholder="Pesquise pela Descrição do produto" />
+					<p:commandButton icon="pi pi-search" styleClass="ui-button-warning"
+						actionListener="#{vendaController.pesquisar}"
+						process="@this itFiltro" update="dtListagem" />
+								
+																																			&#160;
+																																			&#160;
+																																			&#160;
+																																			&#160;
+																																			&#160;
+																																			&#160;
+																																			&#160;
+																																			&#160;
+																																			&#160;
+																																			&#160;
+																																			&#160;
+																																			&#160;
+																																			&#160;
+																																			&#160;
+																																			&#160;
+																																			&#160;
+																																			&#160;
+																																			&#160;
+																																			&#160;
+																																			&#160;
+																																			&#160;
+																																			&#160;
+																																			&#160;
+																																			&#160;
+																																			&#160;
+																																			&#160;
+							<p:selectOneMenu style="width:290px"
+						value="#{vendaController.categoria}">
+						<f:selectItem itemLabel="Filtre pela Categoria" />
+						<f:selectItems value="#{produtoController.listaCategoria}"
+							var="obj" itemLabel="#{obj.label}" />
+					</p:selectOneMenu>
+					<p:commandButton icon="pi pi-search" styleClass="ui-button-warning"
+						actionListener="#{vendaController.pesquisarCategoria}"
+						process="@form" update="dtListagem" />
+				</h:panelGrid>
+
+				<h:dataTable id="dtListagem" class="table table-striped table-hover"
+					value="#{vendaController.listaProduto}" var="obj">
+
+
+					<h:column>
+						<div align="right" style="float: right; position: relative;">
+							<img class="img-responsive"
+								style="max-width: 120px !important; max-height: 100px !important;"
+								src="/NicksBabys/pages/img-produto?nome=#{obj.id}.png" />
+						</div>
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">Categoria</f:facet>
+						<h:outputLabel value="#{obj.categoria.label}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">Descrição</f:facet>
+						<h:outputLabel value="#{obj.descricao}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">Marca</f:facet>
+						<h:outputLabel value="#{obj.marca}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">Cor</f:facet>
+						<h:outputLabel value="#{obj.cor}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">Idade</f:facet>
+						<h:outputLabel value="#{obj.idade}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">Preço</f:facet>
+						<h:outputLabel value="#{obj.preco}" />
+					</h:column>
+
+					<h:column>
+						<p:commandButton value="+ Adicionar ao carrinho"
+							styleClass="rounded-button ui-button-warning"
+							action="#{vendaController.addCarrinho(obj)}" process="@form"
+							update="@form" />
+					</h:column>
+				</h:dataTable>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

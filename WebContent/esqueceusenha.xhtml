@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Esqueceu a Senha</title>
+</h:head>
+<h:body
+	style="background-image: linear-gradient(to right, #bdc3c7,#2c3e50);">
+	<style type="text/css">
+p {
+	line-height: 1.5;
+	margin: 0;
+}
+</style>
+
+
+	<p:card style="width: 25rem; margin-bottom: 2em">
+		<f:facet name="title">
+       Instuções
+    </f:facet>
+
+		<p>Ao receber a mensagem de confirmação que o código de
+			verificação chegou ao seu email, clique em "Clique aqui para
+			Prosseguir"</p>
+	</p:card>
+	<div class="container">
+		<h:form>
+			<p:inputText value="#{esqueceuSenhaController.email}"
+				placeholder="Informe seu e-mail" required="true"
+				requiredMessage="O e-mail deve ser informado." />
+			<p:commandButton update="@form" value="enviar"
+				action="#{esqueceuSenhaController.enviarEmail}" />
+
+			<p:messages id="messages" showDetail="true">
+				<p:autoUpdate />
+			</p:messages>
+
+			<br/>
+			<h:commandLink style="margin-bottom:0; color: white "
+				value="Clique aqui para Prosseguir"
+				action="recuperarsenha.com?faces-redirect=true" />
+		</h:form>
+	</div>
+</h:body>
+</html>

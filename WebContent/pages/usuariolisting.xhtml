@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Consulta de Usuário</title>
+</h:head>
+
+<h:body>
+
+	<p:ajaxStatus onstart="PF('statusDialog').show()"
+		onsuccess="PF('statusDialog').hide()" />
+
+	<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+		closable="false" resizable="false" showHeader="false">
+		<p:graphicImage name="/images/processando.gif" />
+	</p:dialog>
+
+	<h:form>
+		<p:growl id="growl" globalOnly="false" />
+		<p:panel id="panel">
+			<f:facet name="header">
+				<div align="center">
+					<div class="ui-g ui-fluid">
+						<div class="ui-g-12">
+							<div class="card card-w-title">
+								<div class="ui-inputgroup">
+									<p:inputText id="itFiltro" value="#{usuarioListing.filtro}"
+										placeholder="Informe o nome do usuario ..." />
+									<p:commandButton value="Pesquisar"
+										actionListener="#{usuarioListing.pesquisar}"
+										process="@this itFiltro" update="dtListagem" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</f:facet>
+
+			<div class="ui-g ui-fluid">
+				<div class="ui-g-12">
+
+					<div class="card card-w-title">
+
+						<p:dataTable id="dtListagem" var="entity" rowIndexVar="row"
+							paginator="false" reflow="true" value="#{usuarioListing.list}">
+							<p:column headerText="N."
+								style="width: 30px; text-align: center;">
+								<h:outputText value="#{row + 1}" />
+							</p:column>
+
+							<p:column headerText="Nome">
+								<p:commandLink value="#{entity.nome}"
+									actionListener="#{usuarioListing.select(entity.id)}"
+									process="@this" update="@form" />
+							</p:column>
+
+							<p:column headerText="Login">
+								<p:commandLink value="#{entity.login}"
+									actionListener="#{usuarioListing.select(entity.id)}"
+									process="@this" update="@form" />
+							</p:column>
+
+							<p:column headerText="CPF">
+								<p:commandLink value="#{entity.cpf}"
+									actionListener="#{usuarioListing.select(entity.id)}"
+									process="@this" update="@form" />
+							</p:column>
+							
+							<p:column headerText="Senha">
+								<p:commandLink value="#{entity.senha}"
+									actionListener="#{usuarioListing.select(entity.id)}"
+									process="@this" update="@form" />
+							</p:column>
+
+							<p:column headerText="Tipo">
+								<p:commandLink value="#{entity.tipoUsuario}"
+									actionListener="#{usuarioListing.select(entity.id)}"
+									process="@this" update="@form" />
+							</p:column>
+
+
+
+							<f:facet name="footer">
+							        Total de #{usuarioListing.list.size()} Usuários.
+							    </f:facet>
+						</p:dataTable>
+					</div>
+				</div>
+			</div>
+		</p:panel>
+
+	</h:form>
+</h:body>
+</html>

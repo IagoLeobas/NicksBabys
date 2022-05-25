@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template.xhtml">
+	<ui:define name="conteudo">
+		<h:form>
+			<p:growl id="growl" showDetail="false" />
+			<p:panel>
+				<f:facet name="header">
+					<h2>Controle de estoque</h2>
+				</f:facet>
+
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Empresa" />
+					<p:autoComplete placeholder="informe a empresa"
+						value="#{entradaProdutoController.entity.empresa}" var="obj"
+						itemLabel="#{obj.nome}" itemValue="#{obj}"
+						completeMethod="#{entradaProdutoController.completeEmpresa}"
+						dropdown="true" forceSelection="true" />
+
+					<p:outputLabel value="Estoquista" />
+					<p:autoComplete placeholder="informe o Estoquista"
+						value="#{entradaProdutoController.entity.estoquista}" var="obj"
+						itemLabel="#{obj.login}" itemValue="#{obj}"
+						completeMethod="#{entradaProdutoController.completeUsuario}"
+						dropdown="true" forceSelection="true" />
+
+
+					<p:outputLabel value="Produto" />
+					<h:panelGroup>
+						<div class="ui-inputgroup">
+							<p:inputText style="width:200px"
+								value="#{produtoController.entity.descricao}" />
+							<p:commandButton icon="pi pi-search"
+								styleClass="ui-button-warning"
+								actionListener="#{produtoController.abrirProdutoListing}">
+								<p:ajax event="dialogReturn"
+									listener="#{produtoController.obterProdutoListing}"
+									update="@form" />
+							</p:commandButton>
+						</div>
+					</h:panelGroup>
+
+					<p:outputLabel value="Quantidade" />
+					<p:spinner value="#{produtoController.entity.qtdEstoque}"
+						buttons="horizontal-after" upButtonStyleClass="ui-button-success"
+						downButtonStyleClass="ui-button-danger" />
+
+
+				</h:panelGrid>
+
+
+				<f:facet name="footer">
+					<h:panelGrid columns="4">
+						<p:commandButton value="Salvar"
+							styleClass="ui-button-raised ui-button-secondary"
+							actionListener="#{entradaProdutoController.salvar}"
+							action="#{produtoController.salvar}" process="@form"
+							update="@form" />
+
+						<p:commandButton value="Limpar"
+							styleClass="ui-button-raised ui-button-secondary"
+							actionListener="#{entradaProdutoController.limpar}"
+							process="@this" update="@form" />
+
+						<p:commandButton value="Voltar"
+							styleClass="ui-button-raised ui-button-secondary"
+							onclick="history.go(-1); return false;" />
+					</h:panelGrid>
+				</f:facet>
+			</p:panel>
+
+		</h:form>
+
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+			responsive="true" width="350">
+			<p:commandButton value="Não" type="button"
+				styleClass="ui-confirmdialog-no ui-button-flat" />
+			<p:commandButton value="Sim" type="button"
+				styleClass="ui-confirmdialog-yes" />
+		</p:confirmDialog>
+
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage name="/image/loader.gif" height="300" width="400" />
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
+</html>

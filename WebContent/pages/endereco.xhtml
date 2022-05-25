@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template.xhtml">
+	<ui:define name="conteudo">
+		<h:form>
+			<p:growl id="growl" showDetail="false" />
+			<p:panel>
+				<f:facet name="header">
+					<h2>Cadastro de Endereço</h2>
+				</f:facet>
+
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Cep *" />
+					<h:panelGroup>
+						<div class="ui-inputgroup">
+							<p:inputMask for="key" value="#{enderecoController.entity.cep}"
+								id="key" mask="99999-999" validateMask="true" required="true"
+								requiredMessage="O cep deve ser preenchido.">
+							</p:inputMask>
+							<p:commandButton icon="pi pi-search"
+								rendered="#{templateController.usuarioLogado.tipoUsuario.id == 2}"
+								styleClass="ui-button-warning"
+								actionListener="#{enderecoController.abrirEnderecoListing}">
+								<p:ajax event="dialogReturn"
+									listener="#{enderecoController.obterEnderecoListing}"
+									update="@form" />
+							</p:commandButton>
+						</div>
+					</h:panelGroup>
+
+					<p:outputLabel value="Cidade *" />
+					<p:inputText value="#{enderecoController.entity.cidade}"
+						validatorMessage="A cidade tem que possuir mais de 2 caracteres."
+						required="true" requiredMessage="A cidade deve ser informada.">
+						<f:validateLength minimum="2" />
+					</p:inputText>
+
+					<p:outputLabel value="Rua *" />
+					<p:inputText value="#{enderecoController.entity.rua}"
+						validatorMessage="A rua tem que possuir mais de 2 caracteres."
+						required="true" requiredMessage="A rua deve ser informada">
+						<f:validateLength minimum="2" />
+					</p:inputText>
+
+					<p:outputLabel value="Bairro *" />
+					<p:inputText value="#{enderecoController.entity.bairro}"
+						validatorMessage="O bairro tem que possuir mais de 2 caracteres."
+						required="true" requiredMessage="O bairro deve ser preenchido.">
+						<f:validateLength minimum="2" />
+					</p:inputText>
+
+					<p:outputLabel value="Numero *" />
+					<p:inputText value="#{enderecoController.entity.numero}"
+						required="true" requiredMessage="O número deve ser preenchido." />
+
+					<p:outputLabel value="Complemento" />
+					<p:inputText value="#{enderecoController.entity.complemento}" />
+
+				</h:panelGrid>
+
+
+				<f:facet name="footer">
+					<h:panelGrid columns="4">
+						<p:commandButton value="Salvar"
+							styleClass="ui-button-raised ui-button-secondary"
+							actionListener="#{enderecoController.salvar}" process="@form"
+							update="@form" />
+
+						<p:commandButton value="Excluir"
+							styleClass="ui-button-raised ui-button-secondary"
+							actionListener="#{enderecoController.excluir}" process="@form"
+							update="@form">
+							<p:confirm header="Confirmação"
+								styleClass="ui-button-raised ui-button-secondary"
+								message="Deseja realmente excluir o usuário?"
+								icon="pi pi-exclamation-triangle" />
+						</p:commandButton>
+
+						<p:commandButton value="Limpar"
+							styleClass="ui-button-raised ui-button-secondary"
+							actionListener="#{enderecoController.limpar}" process="@this"
+							update="@form" />
+
+						<p:commandButton value="Voltar"
+							styleClass="ui-button-raised ui-button-secondary"
+							onclick="history.go(-1); return false;" />
+					</h:panelGrid>
+				</f:facet>
+			</p:panel>
+
+		</h:form>
+
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+			responsive="true" width="350">
+			<p:commandButton value="Não" type="button"
+				styleClass="ui-confirmdialog-no ui-button-flat" />
+			<p:commandButton value="Sim" type="button"
+				styleClass="ui-confirmdialog-yes" />
+		</p:confirmDialog>
+
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage name="/image/loader.gif" height="300" width="400" />
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
+</html>

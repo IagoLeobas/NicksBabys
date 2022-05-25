@@ -1,0 +1,78 @@
+.wdi-red {
+	color: #000000;
+}
+
+ul {
+	list-style: none;
+	padding: 0;
+}
+
+#container {
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+#login .container #login-row #login-column #login-box {
+	margin-top: 120px;
+	max-width: 600px;
+	height: 450px;
+	border: 1px solid black;
+	box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+	background-image: linear-gradient(to right, #3E5151, #B0C4DE);
+}
+
+#login .container #login-row #login-column #login-box #login-form {
+	padding: 20px;
+}
+
+#login .container #login-row #login-column #login-box #login-form #register-link
+	{
+	margin-top: -85px;
+}
+
+#cadastro .container #cadastro-row #cadastro-column #cadastro-box {
+	margin-top: 120px;
+	max-width: 700px;
+	height: 500px;
+	border: 1px solid black;
+	box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+	background-image: linear-gradient(to right, #3E5151, #B0C4DE);
+}
+
+#cadastro .container #cadastro-row #cadastro-column #cadastro-box #cadastro-form {
+	padding: 40px;
+}
+
+#cadastro .container #cadastro-row #cadastro-column #cadastro-box #cadastro-form #register-link
+	{
+	margin-top: -105px;
+}
+
+.messages {
+	text-align: center;
+	background-color: #cccccc;
+}
+
+.compra {
+	border-radius: 4%;
+	height: 35px;
+	background-color: green;
+	color: white;
+	border: none;
+}
+
+.compra:hover {
+	transition: 0.5s;
+	background-color: #004d00;
+}
+
+#cad {
+	margin-left: 580px;
+	margin-bottom: 50px;
+	margin-top: 50px;
+}
+
+#body-cad {
+	background-color: #e9ecef;
+	height: 60%;
+}

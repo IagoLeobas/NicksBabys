@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template.xhtml">
+	<ui:define name="conteudo">
+		<h:body>
+			<h:form>
+				<p:panel>
+					<f:facet name="header">
+						<h2>Consulta de Usuários</h2>
+					</f:facet>
+					<div class="card">
+
+						<p:dataTable value="#{usuarioController.listaUsuario}" var="obj">
+							<p:column headerText="Id">
+								<h:outputText value="#{obj.id}" />
+							</p:column>
+
+							<p:column headerText="Nome">
+								<h:outputText value="#{obj.nome}" />
+							</p:column>
+
+							<p:column headerText="Cpf">
+								<h:outputText value="#{obj.cpf}" />
+							</p:column>
+
+							<p:column headerText="Login">
+								<h:outputText value="#{obj.login}" />
+							</p:column>
+
+							<p:column headerText="Senha">
+								<h:outputText value="#{obj.senha}" />
+							</p:column>
+
+							<p:column>
+
+								<p:commandButton value="Excluir" icon="pi pi-times"
+									styleClass="rounded-button ui-button-danger ui-button-outlined"
+									actionListener="#{usuarioController.excluir(obj)}"
+									process="@form" update="@form">
+									<p:confirm header="Confirmation"
+										message="Tem certeza que deseja excluir esses dados?"
+										icon="pi pi-info-circle" />
+								</p:commandButton>
+
+								<p:confirmDialog global="true" showEffect="fade"
+									hideEffect="fade" responsive="true" width="350">
+									<p:commandButton value="Não" type="button"
+										styleClass="ui-confirmdialog-no ui-button-flat" />
+									<p:commandButton value="Sim" type="button"
+										styleClass="ui-confirmdialog-yes" />
+								</p:confirmDialog>
+							</p:column>
+						</p:dataTable>
+					</div>
+				</p:panel>
+			</h:form>
+		</h:body>
+	</ui:define>
+</ui:composition>
+</html>

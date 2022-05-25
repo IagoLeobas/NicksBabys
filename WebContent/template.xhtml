@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head
+	style="background-image: linear-gradient(to right, #bdc3c7,#2c3e50);">
+
+	<title>Nicks Babys</title>
+	<nav
+		style="background-image: linear-gradient(to right, #bdc3c7, #2c3e50);">
+		<a> <br />
+			<h1
+				style="color: white; text-align: center; font-family: Comic Sans MS;">
+				Nicks Babys</h1>
+		</a>
+		<div style="text-align: right;">
+			<h:form>
+				<h:outputLabel
+					value="Bem vindo #{templateController.usuarioLogado.login} "
+					styleClass="text-light" />
+			</h:form>
+		</div>
+	</nav>
+	<h:outputStylesheet library="css" name="bootstrap.min.css" />
+	<h:outputStylesheet library="css" name="template.css" />
+	<h:outputStylesheet library="css" name="style.css" />
+
+	<div class="card">
+		<h:form>
+			<p:breadCrumb>
+				<p:menuitem value="" />
+				<p:menuitem value="Cadastrar Usuário"
+					action="/pages/usuario.com?faces-redirect=true"
+					rendered="#{templateController.usuarioLogado.tipoUsuario.id == 2}" />
+				<p:menuitem value="Cadastrar Empresa"
+					action="/pages/pessoajuridica.com?faces-redirect=true"
+					rendered="#{templateController.usuarioLogado.tipoUsuario.id == 2}" />
+				<p:menuitem value="Cadastrar Produto"
+					action="/pages/produto.com?faces-redirect=true"
+					rendered="#{templateController.usuarioLogado.tipoUsuario.id == 2}" />
+				<p:menuitem value="Controle de Estoque"
+					action="/pages/entradaproduto.com?faces-redirect=true"
+					rendered="#{templateController.usuarioLogado.tipoUsuario.id == 2}" />
+				<p:menuitem value="Cadastrar Endereço"
+					action="/pages/endereco.com?faces-redirect=true"
+					rendered="#{templateController.usuarioLogado.tipoUsuario.id == 2}" />
+				<p:menuitem value="Relatórios"
+					action="/relatorioprodutos.com?faces-redirect=true"
+					rendered="#{templateController.usuarioLogado.tipoUsuario.id == 2}" />
+				<p:menuitem value="Meu Perfil"
+					action="meuperfil.com?faces-redirect=true"
+					rendered="#{templateController.usuarioLogado.tipoUsuario.id == 1}" />
+				<p:menuitem value="Vendas" action="/vendas.com?faces-redirect=true" />
+				<p:menuitem value="Carrinho"
+					action="/carrinho.com?faces-redirect=true" />
+				<p:menuitem value="Histórico de Compras"
+					action="/historico.com?faces-redirect=true" />
+				<p:menuitem value="Sair"
+					action="#{templateController.encerrarSessao}" />
+			</p:breadCrumb>
+		</h:form>
+	</div>
+</h:head>
+
+<section class="jumbotron text-center">
+	<div class="container">
+		<p>
+		<div class="box content" align="center">
+			<ui:insert name="conteudo">
+				<div align="center">
+					<h1>Bem-Vindo!</h1>
+				</div>
+			</ui:insert>
+		</div>
+		</p>
+
+	</div>
+</section>
+
+<h:body>
+	<!-- Footer -->
+	<footer class="page-footer font-small special-color-dark pt-4">
+
+		<!-- Footer Elements -->
+		<div class="container">
+
+			<!-- Social buttons -->
+			<ul class="list-unstyled list-inline text-center">
+
+				<li class="list-inline-item"><a
+					class="btn-floating btn-gplus mx-1"> <a
+						href="https://www.freepnglogos.com/pics/whatsapp-logo-png"
+						title="Image from freepnglogos.com"><img
+							src="https://www.freepnglogos.com/uploads/whatsapp-logo-light-green-png-0.png"
+							width="64" alt="whatsapp logo light green png" /></a>
+				</a></li>
+
+				<li class="list-inline-item"><a
+					class="btn-floating btn-fb mx-1"> <a
+						href="https://www.freepnglogos.com/pics/facebook-logo"
+						title="Image from freepnglogos.com"><img
+							src="https://www.freepnglogos.com/uploads/facebook-logo-14.png"
+							width="38" alt="facebook white and blue icon" /></a>
+				</a></li>
+
+
+				<li class="list-inline-item"><a
+					class="btn-floating btn-li mx-1"> <a
+						href="https://www.freepnglogos.com/pics/telegram-logo"
+						title="Image from freepnglogos.com"><img
+							src="https://www.freepnglogos.com/uploads/telegram-logo-png-0.png"
+							width="40" alt="telegram logo png" /></a>
+				</a></li>
+				<li class="list-inline-item"><a
+					class="btn-floating btn-dribbble mx-1"> <a
+						href="https://www.freepnglogos.com/pics/email-logo-png"
+						title="Image from freepnglogos.com"><img
+							src="https://www.freepnglogos.com/uploads/gmail-email-logo-png-12.png"
+							width="40" alt="gmail, email logo png" /></a>
+				</a></li>
+				<li class="list-inline-item"><a
+					class="btn-floating btn-tw mx-1"> <a
+						href="https://www.instagram.com/nicks.babys/"
+						title="Image from freepnglogos.com"><img
+							src="https://www.freepnglogos.com/uploads/logo-ig-png/logo-ig-instagram-png-icons-logo-png-images-for-download-15.png"
+							width="60"
+							alt="logo ig, instagram png icons logo png images for download" /></a>
+
+				</a></li>
+
+
+			</ul>
+			<!-- Social buttons -->
+
+		</div>
+		<!-- Footer Elements -->
+
+		<!-- Copyright -->
+		<div class="footer-copyright text-center py-3">© 2021 Nicks
+			Babys -Todos os direitos reservados</div>
+		<!-- Copyright -->
+
+	</footer>
+	<!-- Footer -->
+</h:body>
+</html>

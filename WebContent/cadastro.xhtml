@@ -1,0 +1,105 @@
+<!DOCTYPE html >
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:outputStylesheet name="style.css" library="css" />
+<h:outputStylesheet library="css" name="style.css" />
+<h:outputStylesheet library="css" name="bootstrap.min.css" />
+
+<h:head>
+	<title>Cadastre-se</title>
+
+</h:head>
+
+<h:body
+	style="background-image: linear-gradient(to right, #bdc3c7,#2c3e50);">
+	<div id="cadastro">
+		<div class="container">
+			<div id="cadastro-row"
+				class="row justify-content-center align-items-center">
+				<div id="cadastro-column" class="col-md-6">
+					<div id="cadastro-box" class="col-md-12">
+						<p></p>
+						<br /> <br />
+
+						<h3 class="text-center" style="color: white">Cadastre-se</h3>
+						<br />
+						<h:form>
+							<div class="form">
+
+								<p:outputLabel value="Nome *" style="color: white" />
+								<p:inputText styleClass="form-control"
+									value="#{usuarioController.entity.pessoaFisica.nome}"
+									validatorMessage="O nome tem que possuir mais de 2 caracteres."
+									required="true" requiredMessage="O nome deve ser preenchido.">
+									<f:validateLength minimum="2" />
+								</p:inputText>
+							</div>
+							<div class="form">
+								<p:outputLabel for="key" value="Cpf" style="color: white" />
+								<p:inputMask styleClass="form-control"
+									value="#{usuarioController.entity.pessoaFisica.cpf}" id="key"
+									mask="999.999.999-99" validateMask="true" required="true"
+									requiredMessage="O cpf deve ser preenchido.">
+								</p:inputMask>
+							</div>
+							<div class="form">
+
+								<p:outputLabel value="Login *" style="color: white" />
+								<p:inputText styleClass="form-control"
+									value="#{usuarioController.entity.login}" required="true"
+									requiredMessage="O login deve ser preenchido.">
+								</p:inputText>
+							</div>
+							<div class="form">
+
+								<p:outputLabel value="Senha *" style="color: white" />
+								<p:password id="inlineFeedback"
+									value="#{usuarioController.entity.senha}" feedback="true"
+									styleClass="form-control" inline="true" required="true"
+									requiredMessage="A senha deve ser preenchida.">
+								</p:password>
+							</div>
+
+							<div class="form">
+
+								<p:outputLabel value="Confirmar Senha *" style="color: white" />
+								<p:inputText value="#{usuarioController.confirmarSenha}"
+									styleClass="form-control" type="password" required="true"
+									requiredMessage="O confirmar senha deve ser preenchido.">
+								</p:inputText>
+							</div>
+
+							<br />
+
+							<h:panelGrid columns="3">
+								<p:commandButton value="Salvar"
+									styleClass="ui-button-raised ui-button-secondary"
+									actionListener="#{usuarioController.salvarCadastro}"
+									process="@form" update="@form" />
+
+								<p:commandButton value="Limpar"
+									styleClass="ui-button-raised ui-button-secondary"
+									actionListener="#{usuarioController.limpar}" process="@this"
+									update="@form" />
+
+								<p:commandButton value="Voltar ao login"
+									styleClass="ui-button-raised ui-button-secondary"
+									onclick="history.go(-1); return false;" />
+							</h:panelGrid>
+							<p>
+								<h:messages id="message" class="alert alert-light" role="alert" />
+							</p>
+
+						</h:form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</h:body>
+</html>
